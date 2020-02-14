@@ -26,13 +26,13 @@ class Game {
     });
     
     document.addEventListener("keydown", (event) => {
-      switch (event.key) {
-        case " ":
+      switch (event.code) {
+        case "Space":
           if (this._mimika.status == STATUS_DEAD) {
             this.setup();
           }
           break;
-        case "t":
+        case "KeyT":
           if (this._survivalTime > 0) {
             const currentURL = location.href;
             const tweetText = `ミミカはカニにやられるまで、${this._eatenRiceballs}個のおにぎりを食べて、${Math.floor(this._survivalTime)}秒生き残りました（${this._totalScore}点）`;
@@ -142,7 +142,7 @@ class Game {
       if (this._survivalTime == 0) {
         this._drawMessage("スペースでスタート");
       } else {
-        this._drawMessage("スペースでスタート・Tで得点をツイート");
+        this._drawMessage("スペースでスタート　Tで得点をツイート");
       }
    }
     

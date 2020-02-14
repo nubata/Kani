@@ -40,7 +40,7 @@ class Input {
   }
   
   _onKeyDown(event) {
-    switch (event.key) {
+    switch (event.code) {
       case "ArrowUp":
         this._buttons[DIRECTION_UP] = true;
         break;
@@ -58,7 +58,7 @@ class Input {
   }
   
   _onKeyUp(event) {
-    switch (event.key) {
+    switch (event.code) {
       case "ArrowUp":
         this._buttons[DIRECTION_UP] = false;
         break;
