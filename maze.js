@@ -7,7 +7,7 @@ const TILE_EMPTY = 0;
 const TILE_BLOCK = 1;
 const TILE_SPAWNER = 2;
 const TILE_START = 3;
-const TILE_LAST = TILE_START;
+const TILE_LAST = Math.max(TILE_EMPTY, TILE_BLOCK, TILE_SPAWNER, TILE_START);
 
 class Maze {
 
@@ -89,7 +89,7 @@ class Maze {
       for (let icol = 0; icol < this._cols; icol++) {
         const tile = row[icol]
 
-        if (tile != TILE_EMPTY && tile != TILE_START) {
+        if (tile == TILE_BLOCK) {
             const x = Math.floor(TILE_WIDTH * (icol + 0.5));
             const y = Math.floor(TILE_HEIGHT * (irow + 0.5));
 
