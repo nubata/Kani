@@ -5,8 +5,15 @@ const DIRECTION_RIGHT = 1;
 const DIRECTION_DOWN = 2;
 const DIRECTION_LEFT = 3;
 
+const STATUS_ALIVE = 0;
+const STATUS_DYING = 1;
+const STATUS_DEAD = 2;
+
+const _DURATION_WALK = 20;
+const _DURATION_DYING = 240;
+
 class Animal {
-  
+
   constructor(url) {
     this._sprite = new Sprite(url, TILE_WIDTH, TILE_HEIGHT);
 
@@ -16,23 +23,32 @@ class Animal {
     this._frame = 0;
     this._loop = false;
 
-    this._direction = DIRECTION_DOWN;
+    this._direction = DIRECTION_UP;
+    this._status = STATUS_ALIVE;
 
     this._dx = 0;
     this._dy = 0;
-  
+
     this.animate([[0, this._direction]], 1, 0, 0, false);
 
     this._x = Math.round(this.width / 2);
     this._y = Math.round(this.height / 2);
   }
 
+  get direction() {
+    return this._direction;
+  }
+
+  get status() {
+    return this._status;
+  }
+
   get x() {
-    return self._x;
+    return this._x;
   }
 
   get y() {
-    return self._y;
+    return this._y;
   }
 
   get width() {
@@ -60,7 +76,11 @@ class Animal {
     this._frame = -1;
   }
 
-  walk(direction, duration) {
+  walk(direction) {
+    if (this._status != STATUS_ALIVE) {
+      return false;
+    }
+
     const keyframes = [];
     for (let i = 0; i < 4; i++) {
       keyframes.push([i, this._direction]);
@@ -89,11 +109,15 @@ class Animal {
     const icol1 = (this.icol + dcol + maze.cols) % maze.cols;
     const tile = maze.tile(irow1, icol1);
 
-    if (tile == BLOCK_TILE) {
+    if (tile == TILE_BLOCK) {
+      canceled = true;
+    }
+
+    let duration = _DURATION_WALK;
+    if (canceled) {
       drow = 0;
       dcol = 0;
       duration = 1;
-      canceled = true;
     }
 
     const dx = TILE_WIDTH * dcol;
@@ -106,7 +130,7 @@ class Animal {
   get animationFinished() {
     return this._frame >= this._duration;
   }
-  
+
   update() {
     this._frame += 1;
 
@@ -120,7 +144,7 @@ class Animal {
       this._x += this._dx / this._duration;
       this._y += this._dy / this._duration;
     }
-    
+
     if (this._x < 0) {
       this._x = this._x + maze.width;
     } else if (this._x >= maze.width) {
@@ -132,7 +156,7 @@ class Animal {
       this._y = this._y - maze.height;
     }
   }
-  
+
   draw() {
     let i = Math.floor(this._frame / this._duration * this._keyframes.length);
     if (i >= this._keyframes.length) {
@@ -144,10 +168,14 @@ class Animal {
     const h = keyframe[0];
     const v = keyframe[1];
     
+    if (h < 0 || v < 0) {
+      return;
+    }
+
     const x = Math.round(this._x);
     const y = Math.round(this._y);
-    
+
     this._sprite.draw(h, v, x, y);
   }
-  
+
 }

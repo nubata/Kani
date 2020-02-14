@@ -3,21 +3,22 @@
 const TILE_WIDTH = 32;
 const TILE_HEIGHT = 32;
 
-const EMPTY_TILE = 0;
-const BLOCK_TILE = 1;
-const SPAWNER_TILE = 2;
-const START_TILE = 3;
+const TILE_EMPTY = 0;
+const TILE_BLOCK = 1;
+const TILE_SPAWNER = 2;
+const TILE_START = 3;
+const TILE_LAST = TILE_START;
 
 class Maze {
-  
+
   constructor(rows, cols) {
     this._rows = rows;
     this._cols = cols;
 
     this._tiles = [];
-    for (let irow = 0; irow < this._rows; ++irow) {
+    for (let irow = 0; irow < this._rows; irow++) {
       const row = [];
-      for (let icol = 0; icol < this._cols; ++icol) {
+      for (let icol = 0; icol < this._cols; icol++) {
         row.push(0);
       }
       this._tiles.push(row);
@@ -45,7 +46,10 @@ class Maze {
         const row = this._tiles[irow];
         for (let icol = 0; icol < this._cols; icol++) {
           const offset = irow * this._cols + icol;
-          const tile = data[offset];
+          let tile = data[offset];
+          if (tile > TILE_LAST) {
+            tile = TILE_EMPTY;
+          }
           row[icol] = tile;
         }
       }
@@ -76,7 +80,7 @@ class Maze {
   tile(irow, icol) {
     return this._tiles[irow][icol];
   }
-  
+
   draw() {
     const context = graphics.context;
 
@@ -85,9 +89,9 @@ class Maze {
       for (let icol = 0; icol < this._cols; icol++) {
         const tile = row[icol]
 
-        if (tile != EMPTY_TILE && tile != START_TILE) {
-            const x = Math.floor(TILE_WIDTH * (irow + 0.5));
-            const y = Math.floor(TILE_HEIGHT * (icol + 0.5));
+        if (tile != TILE_EMPTY && tile != TILE_START) {
+            const x = Math.floor(TILE_WIDTH * (icol + 0.5));
+            const y = Math.floor(TILE_HEIGHT * (irow + 0.5));
 
             const h = tile - 1;
             const v = 0;

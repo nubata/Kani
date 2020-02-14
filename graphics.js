@@ -1,7 +1,7 @@
 "use strict";
 
 class Graphics {
-  
+
   constructor() {
     this._canvas = null;
     this._context = null;
@@ -14,7 +14,7 @@ class Graphics {
 
     this._context = this._canvas.getContext("2d");
   }
-  
+
   get context() {
     return this._context;
   }
@@ -26,7 +26,7 @@ class Graphics {
   get height() {
     return this._canvas.height;
   }
-  
+
 }
 
 

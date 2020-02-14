@@ -13,10 +13,10 @@ class Kani extends Animal {
 
   update() {
     if (this.animationFinished) {
-      if (Math.random() < 0.1) {
+      if (Math.random() < 0.05) {
         this._direction = Math.floor(Math.random() * 4);
       }
-      while (this.walk(this._direction, 20)) {
+      while (this.walk(this._direction)) {
         this._direction = Math.floor(Math.random() * 4);
       }
     }

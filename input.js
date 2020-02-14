@@ -5,13 +5,13 @@ class Input {
   constructor() {
     document.addEventListener("keydown", (event) => this._onKeyDown(event));
     document.addEventListener("keyup", (event) => this._onKeyUp(event));
-    
+
     this._buttons = [false, false, false, false];
-    
-    this._direction = DIRECTION_DOWN;
+
+    this._direction = DIRECTION_UP;
     this._walking = false;
   }
-  
+
   get direction() {
     return this._direction;
   }
@@ -22,7 +22,15 @@ class Input {
   
   _update() {
     this._walking = false;
-    for (const direction of [DIRECTION_UP, DIRECTION_RIGHT, DIRECTION_DOWN, DIRECTION_LEFT]) {
+
+    const directions = [
+      DIRECTION_UP,
+      DIRECTION_RIGHT,
+      DIRECTION_DOWN,
+      DIRECTION_LEFT
+    ];
+
+    for (const direction of directions) {
       if (this._buttons[direction]) {
         this._direction = direction;
         this._walking = true;

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ja">
   <head>
+    <meta charset="utf-8"/>
     <title>Kani</title>
     <link rel="stylesheet" href="style.css">
     <script type="text/javascript" src="sprite.js"></script>
@@ -12,13 +13,23 @@
     <script type="text/javascript" src="kani.js"></script>
     <script type="text/javascript" src="maze.js"></script>
     <script type="text/javascript" src="mimika.js"></script>
+    <script type="text/javascript" src="riceball.js"></script>
   </head>
   <body>
     <div class="center">
+      <div>
+        <h1>カニ</h1>
+        おにぎり <span id="riceball">0</span>個 &nbsp;
+        生存時間 <span id="time">0</span>秒 &nbsp;
+        得点 <span id="score">0</span>点
+      </div>
       <canvas id="canvas" width="640" height="480">
       </canvas>
-      <br/>
-    　矢印キーを使って、カニに捕まらないように逃げてください。
+      <div>
+        スペースキーを押して、ゲームを開始してください。<br/>
+        矢印キーでカニから逃げつつ、おにぎりを食べて下さい。<br/>
+        ゲームオーバー後に、『T』キーで得点をツイートできます。
+      </div>
     </div>
   </body>
 </html>
